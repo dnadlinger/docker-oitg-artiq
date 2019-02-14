@@ -19,5 +19,11 @@ RUN wget https://github.com/OxfordIonTrapGroup/oitg/archive/${OITG}.tar.gz && \
     cd .. && \
     rm -rf ${OITG}.tar.gz oitg-${OITG}
 
+# Install formatters/linters for CI checks. Pin a given version so that previously
+# passing builds don't suddenly break if some formatting minutiae change. Update
+# from time to time.
+RUN bash -c ". activate artiq && \
+    pip install --no-cache-dir flake8==3.7.5 yapf==0.26.0"
+
 ENTRYPOINT []
 CMD [ "/bin/bash" ]
