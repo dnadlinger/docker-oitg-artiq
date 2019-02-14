@@ -1,11 +1,14 @@
 FROM continuumio/miniconda3:latest
 
+# Install make for running Sphinx documentation builds.
+RUN apt-get update && apt-get install make
+
 # Install ARTIQ. The package can't be installed in the root, so create an
 # eponymous environment.
 RUN conda config --add channels m-labs && \
     conda config --add channels conda-forge && \
     conda config --add channels m-labs/label/dev
-RUN conda create -qy -n artiq nomkl artiq && conda clean -tipsy
+RUN conda create -qy -n artiq nomkl artiq sphinx && conda clean -tipsy
 
 # Activate the environment by default for container users.
 RUN echo "source activate artiq" > ~/.bashrc
@@ -24,6 +27,10 @@ RUN wget https://github.com/OxfordIonTrapGroup/oitg/archive/${OITG}.tar.gz && \
 # from time to time.
 RUN bash -c ". activate artiq && \
     pip install --no-cache-dir flake8==3.7.5 yapf==0.26.0"
+
+# Install Sphinx ReadTheDocs theme.
+RUN bash -c ". activate artiq && \
+    pip install --no-cache-dir sphinx_rtd_theme"
 
 ENTRYPOINT []
 CMD [ "/bin/bash" ]
