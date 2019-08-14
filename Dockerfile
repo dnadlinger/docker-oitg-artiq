@@ -7,14 +7,15 @@ RUN apt-get update && apt-get install make
 # eponymous environment.
 RUN conda config --add channels m-labs && \
     conda config --add channels conda-forge && \
-    conda config --add channels m-labs/label/dev
+    conda config --add channels m-labs/label/dev && \
+    conda config --add channels http://10.255.6.4/condapkg
 RUN conda create -qy -n artiq nomkl artiq sphinx && conda clean -tipsy
 
 # Activate the environment by default for container users.
 RUN echo "source activate artiq" > ~/.bashrc
 
 # Fetch and install OITG.
-ENV OITG=933ba037f6354f4b2652592c44f9d74a3be29b30
+ENV OITG=9297f761dd9391d2f18e830acffd67faab8e1b2c
 RUN wget https://github.com/OxfordIonTrapGroup/oitg/archive/${OITG}.tar.gz && \
     tar xf ${OITG}.tar.gz && \
     cd oitg-${OITG} && \
