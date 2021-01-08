@@ -1,7 +1,9 @@
 FROM continuumio/miniconda3:latest
 
-# Install make for running Sphinx documentation builds.
-RUN apt-get update && apt-get install make
+# Install make for running Sphinx documentation builds, and libGL to be
+# able to import Quamash (even though we don't actually use QtGui in the
+# tests, it still gets imported).
+RUN apt-get update && apt-get install -y libgl1 make
 
 # Install ARTIQ. The package can't be installed in the root, so create an
 # eponymous environment.
