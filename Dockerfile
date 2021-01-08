@@ -32,7 +32,7 @@ RUN wget https://github.com/OxfordIonTrapGroup/oitg/archive/${OITG}.tar.gz && \
 # passing builds don't suddenly break if some formatting minutiae change. Update
 # from time to time.
 RUN bash -c ". activate artiq && \
-    pip install --no-cache-dir flake8==3.7.7 yapf==0.29.0"
+    pip install --no-cache-dir flake8==3.8.3 yapf==0.30.0"
 
 # Install Sphinx ReadTheDocs theme.
 RUN bash -c ". activate artiq && \
