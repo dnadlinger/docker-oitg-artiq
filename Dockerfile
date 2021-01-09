@@ -6,12 +6,14 @@ FROM continuumio/miniconda3:latest
 RUN apt-get update && apt-get install -y libgl1 make
 
 # Install ARTIQ. The package can't be installed in the root, so create an
-# eponymous environment.
+# eponymous environment. (The repositories end up taking precedence in the
+# inverse order as added here, so conda-forge needs to be below the m-labs
+# labels to avoid pulling in an old, incompatible version of prettytable.)
 RUN conda config --add channels m-labs && \
+    conda config --add channels m-labs/label/obsolete && \
     conda config --add channels conda-forge && \
-    conda config --add channels m-labs/label/dev && \
     conda config --add channels http://10.255.6.4/condapkg
-RUN conda create -qy -n artiq nomkl artiq sphinx && conda clean -tipsy
+RUN conda create -qy -n artiq nomkl artiq-env sphinx && conda clean -tipsy
 
 # Activate the environment by default for container users.
 RUN echo "source activate artiq" > ~/.bashrc
