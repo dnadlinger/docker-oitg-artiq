@@ -18,11 +18,6 @@ RUN conda create -qy -n artiq nomkl artiq-env sphinx && conda clean -tipsy
 # Activate the environment by default for container users.
 RUN echo "source activate artiq" > ~/.bashrc
 
-# Pin pandas==0.25.3 (which is depended on by statsmodels, which is depended on by oitg),
-# as Pandas 1.0+ does not install on Python 3.5 anymore.
-RUN bash -c ". activate artiq && \
-    pip install --no-cache-dir pandas==0.25.3 statsmodels"
-
 # Fetch and install OITG.
 ENV OITG=dfc935a4014e78def056ebd295a0d2f19f6e008c
 RUN wget https://github.com/OxfordIonTrapGroup/oitg/archive/${OITG}.tar.gz && \
