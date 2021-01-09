@@ -19,7 +19,7 @@ RUN conda create -qy -n artiq nomkl artiq-env sphinx && conda clean -tipsy
 RUN echo "source activate artiq" > ~/.bashrc
 
 # Fetch and install OITG.
-ENV OITG=dfc935a4014e78def056ebd295a0d2f19f6e008c
+ENV OITG=0e54f45b8ef305d3f7ac3eaee1f16b3dfc8434b1
 RUN wget https://github.com/OxfordIonTrapGroup/oitg/archive/${OITG}.tar.gz && \
     tar xf ${OITG}.tar.gz && \
     cd oitg-${OITG} && \
